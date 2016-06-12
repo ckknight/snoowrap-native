@@ -1,5 +1,5 @@
 import Promise from 'bluebird';
-import promise_wrap from 'promise-chains';
+import promise_wrap from '../promise-chains';
 import {handle_json_errors} from '../helpers.js';
 import ReplyableContent from './ReplyableContent.js';
 const api_type = 'json';

@@ -1,7 +1,7 @@
 import {assign, camelCase, defaults, forEach, forOwn, findKey, includes, isEmpty, isFunction, isObject, isString, isUndefined,
   map, mapValues, omit, omitBy, values} from 'lodash';
 import Promise from 'bluebird';
-import promise_wrap from 'promise-chains';
+import promise_wrap from './promise-chains';
 import util from 'util';
 import * as request_handler from './request_handler.js';
 import {HTTP_VERBS, KINDS, MAX_LISTING_ITEMS, MODULE_NAME, USER_KEYS, SUBREDDIT_KEYS, VERSION} from './constants.js';

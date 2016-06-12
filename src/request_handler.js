@@ -1,6 +1,6 @@
 import {includes} from 'lodash';
 import Promise from 'bluebird';
-import request_promise from 'request-promise';
+import request_promise from './request-promise';
 import {MAX_TOKEN_LATENCY} from './constants.js';
 import {RateLimitWarning, RateLimitError} from './errors.js';
 const request = request_promise.defaults({json: true});
@@ -96,7 +96,7 @@ export function _await_ratelimit () {
       /* If the `continue_after_ratelimit_error` setting is enabled, queue the request, wait until the next ratelimit
       period, and then send it. */
       this.log.warn(RateLimitWarning(time_until_expiry));
-      return Promise.delay(time_until_expiry);
+      return Promise.delay(Math.max(0, time_until_expiry));
     }
     // Otherwise, throw an error.
     throw new RateLimitError(time_until_expiry);
@@ -109,7 +109,7 @@ export function _await_request_delay () {
   const now = Date.now();
   const wait_time = this._next_request_timestamp - now;
   this._next_request_timestamp = Math.max(now, this._next_request_timestamp) + this._config.request_delay;
-  return Promise.delay(wait_time);
+  return Promise.delay(Math.max(0, wait_time));
 }
 
 /**

@@ -1,7 +1,7 @@
 import {chunk, flatten, identity, map, omit} from 'lodash';
 import Promise from 'bluebird';
 import {Readable} from 'stream';
-import {createReadStream} from 'fs';
+// import {createReadStream} from 'fs';
 import {format_mod_permissions, handle_json_errors, rename_key} from '../helpers.js';
 import {InvalidMethodCallError} from '../errors.js';
 import RedditContent from './RedditContent.js';
@@ -927,9 +927,9 @@ const Subreddit = class extends RedditContent {
   }
   _upload_sr_img ({name, file, upload_type, image_type}) {
     if (typeof file !== 'string' && !(file instanceof Readable)) {
-      throw new InvalidMethodCallError('Uploaded image filepath must be a string or a ReadableStream.');
+      throw new InvalidMethodCallError('Uploaded image filepath must be a ReadableStream.');
     }
-    const parsed_file = typeof file === 'string' ? createReadStream(file) : file;
+    const parsed_file = file;
     return this._post({
       uri: `r/${this.display_name}/api/upload_sr_img`,
       formData: {name, upload_type, img_type: image_type, file: parsed_file}
